@@ -24,3 +24,5 @@
 - [ ] Longest Subarray of 1's After Deleting One Element
 
 ### Prefix Sum
+- [x] Find the Highest Altitude
+- [ ] Find Pivot Index
