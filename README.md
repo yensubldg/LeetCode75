@@ -6,7 +6,7 @@
 - [x] Kids With the Greatest Number of Candies
 - [x] Can Place Flowers
 - [ ] Reverse Vowels of a String
-- [ ] Reverse Words in a String
+- [x] Reverse Words in a String
 - [ ] Product of Array Except Self
 - [ ] Increasing Triplet Subsequence
 - [ ] String Compression
