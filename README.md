@@ -26,3 +26,6 @@
 ### Prefix Sum
 - [x] Find the Highest Altitude
 - [ ] Find Pivot Index
+
+### Stack
+- [x] 2390. Removing Stars From a String
