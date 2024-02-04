@@ -16,14 +16,17 @@ jobs:
       - name: Count CPP Files
         id: count_cpp_files
         run: |
-          $count = find . -name "*.cpp" | wc -l
-          $start = $(grep -n "STARTCOUNT" README.md | cut -d: -f1)
-          $end = $(grep -n "ENDCOUNT" README.md | cut -d: -f1)
+          echo "$(find . -name '*.cpp' | wc -l)" > count.txt
 
-          sed -i "${start},${end}d" README.md
-          sed -i "${start}i $count" README.md
+          start_line=$(grep -n "STARTCOUNT" README.md | cut -d: -f1)
+          end_line=$(grep -n "ENDCOUNT" README.md | cut -d: -f1)
+
+          sed -i "${start_line}s/.*/STARTCOUNT/" README.md
+          sed -i "${end_line}s/.*/ENDCOUNT/" README.md
+          sed -i "${start_line}r count.txt" README.md
+          rm count.txt
 
       - name: Update README
         run: |
-          git commit -am "Update README with new count"
+          git commit -am "Update README with CPP file count"
           git push
