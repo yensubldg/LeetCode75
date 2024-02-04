@@ -1,0 +1,34 @@
+name: Count CPP Files
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+jobs:
+  count_cpp:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Count CPP files
+      run: |
+        cpp_files=$(find . -name "*.cpp" | wc -l)
+        start_count_line=$(grep -n '--- STARTCOUNT ---' README.md | cut -d: -f1)
+        
+        if [ -n "$start_count_line" ]; then
+          sed -i "${start_count_line}a Total CPP files: $cpp_files" README.md
+        else
+          echo "--- STARTCOUNT ---" >> README.md
+          echo "Total CPP files: $cpp_files" >> README.md
+          echo "--- ENDCOUNT ---" >> README.md
+        fi
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add README.md
+        git commit -m "Update CPP file count in README"
+        git push
