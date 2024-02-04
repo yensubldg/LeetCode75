@@ -1,5 +1,9 @@
 # LeetCode75
 
+<!--- STARTCOUNT --->
+
+<!--- ENDCOUNT --->
+
 ### Array / String
 - [x] Merge Strings Alternately
 - [x] Greatest Common Divisor of Strings
