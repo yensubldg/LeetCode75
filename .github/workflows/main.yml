@@ -16,10 +16,14 @@ jobs:
       - name: Count CPP Files
         id: count_cpp_files
         run: |
-          echo "CPP Files: $(find . -name '*.cpp' | wc -l)" >> README.md
-          echo "H Files: $(find . -name '*.h' | wc -l)" >> README.md
-          echo "Total Files: $(find . -name '*.cpp' -o -name '*.h' | wc -l)" >> README.md
+          $count = find . -name "*.cpp" | wc -l
+          $start = $(grep -n "STARTCOUNT" README.md | cut -d: -f1)
+          $end = $(grep -n "ENDCOUNT" README.md | cut -d: -f1)
+
+          sed -i "${start},${end}d" README.md
+          sed -i "${start}i $count" README.md
 
       - name: Update README
         run: |
-          sed -i '/STARTCOUNT/,/ENDCOUNT/c\STARTCOUNT\nCPP Files: $(find . -name '*.cpp' | wc -l)\nH Files: $(find . -name '*.h' | wc -l)\nTotal Files: $(find . -name '*.cpp' -o -name '*.h' | wc -l)\nENDCOUNT' README.md
+          git commit -am "Update README with new count"
+          git push
