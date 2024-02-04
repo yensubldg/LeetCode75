@@ -31,3 +31,7 @@
 - [x] Removing Stars From a String
 - [x] Asteroid Collision
 - [ ] Decode String
+
+### Queue
+- [x] Number of Recent Calls
+- [ ] Dota2 Senate
