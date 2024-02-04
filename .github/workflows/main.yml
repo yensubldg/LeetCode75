@@ -1,24 +1,25 @@
-name: Count CPP Files
+name: Count CPP Files and Update README (STARTCOUNT and ENDCOUNT)
 
 on:
   push:
     branches:
-      - main  # Change this if you're using a different main branch name
+      - main
 
 jobs:
   count_cpp_files:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Count CPP Files
-      id: count
-      run: |
-        count=$(find . -type f -name "*.cpp" | wc -l)
-        echo "::set-output name=cpp_count::$count"
+      - name: Count CPP Files
+        id: count_cpp_files
+        run: |
+          echo "CPP Files: $(find . -name '*.cpp' | wc -l)" >> README.md
+          echo "H Files: $(find . -name '*.h' | wc -l)" >> README.md
+          echo "Total Files: $(find . -name '*.cpp' -o -name '*.h' | wc -l)" >> README.md
 
-    - name: Update README
-      run: |
-        sed -i -e "s/<!--- STARTCOUNT --->.*<!--- ENDCOUNT --->/<!--- STARTCOUNT --->$(( $(cat README.md | grep -oP '(?<=<!--- STARTCOUNT --->).*?(?=<!--- ENDCOUNT --->)' | tr -d '[:space:]') + ${{ steps.count.outputs.cpp_count }} ))<!--- ENDCOUNT --->/" README.md
+      - name: Update README
+        run: |
+          sed -i '/STARTCOUNT/,/ENDCOUNT/c\STARTCOUNT\nCPP Files: $(find . -name '*.cpp' | wc -l)\nH Files: $(find . -name '*.h' | wc -l)\nTotal Files: $(find . -name '*.cpp' -o -name '*.h' | wc -l)\nENDCOUNT' README.md
